@@ -1,0 +1,62 @@
+<html>
+    <head>
+        <style>
+             h1{
+                padding: 15px;
+                margin-top: 15px;
+                margin-left: 15px;
+                font-size: 20px;
+                line-height: 15px;
+                font-style: italic;
+                text-decoration: underline;
+                text-align: center;
+            }
+            form {
+                margin-left: 20%;
+                width: 50%;
+                background-color: #fff;
+                padding: 20px;
+                    border-radius: 8px;
+            }
+            label {
+                display: block;
+                margin-bottom: 8px;
+                font-weight: bold;
+            }
+
+            input, textarea {
+                width: 100%;
+                padding: 8px;
+                margin-bottom: 10px;
+                box-sizing: border-box;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
+
+        </style>
+    </head>
+    <body style="background-image:url(white_bg.avif);background-repeat: no-repeat;background-size: cover;">
+        <h1> FEEDBACK FORM </h1>
+        <form action="#" method="post">
+            <label for="name">NAME  :</label>
+            <input type="text" id="name" name="name" required><br>
+    
+            <label for="email">EMAIL   :</label>
+            <input type="email" id="email" name="email" required><br>
+
+            <label for="company">COMPANY   :</label>
+            <input type="text" id="comp" name="comp" required><br>
+    
+            <label for="feedback">FEEDBACK  :</label>
+            <textarea id="feedback" name="feedback" rows="4" required></textarea><br>
+            
+            <label for="ratings">Ratings  :</label>
+            <input id="r1" name="r1" type="radio" required>Excellent</input>
+            <input id="r1" name="r1" type="radio" required>Average</input>
+            <input id="r1" name="r1" type="radio" required>Poor</input>
+            <br>
+            <button type="submit">Submit</button>
+        </form>
+    
+    </body>
+</html>
