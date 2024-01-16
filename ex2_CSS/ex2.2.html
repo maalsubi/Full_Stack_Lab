@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Overlapping Images</title>
+    <style>
+        div {
+            margin: 50px;
+            position: relative;
+        }
+        div img {
+            width: 300px;
+            height: 400px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: absolute;
+        }
+        #i1 {
+            left: 0;
+        }
+        #i2 {
+            left: 70px; 
+        }
+        #i3 {
+            left: 140px; 
+        }
+        #i4 {
+            left: 210px; 
+        }
+        #i5 {
+            left: 280px; 
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <img id="i1" src="card1.jpg" alt="card1">
+        <img id="i2" src="card2.jpg" alt="card2">
+        <img id="i3" src="card3.jpg" alt="card3">
+        <img id="i4" src="card4.jpg" alt="card4">
+        <img id="i5" src="card5.jpg" alt="card5">
+    </div>
+
+</body>
+</html>
