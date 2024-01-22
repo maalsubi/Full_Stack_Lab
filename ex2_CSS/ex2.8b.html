@@ -5,7 +5,8 @@
 <style>
    .menu {
 	  width: 2000px; 
-	  list-style-type: none; 
+	  list-style-type: none;
+	  position: fixed; 
 	}
 	.menu a {
 	  background-color: #dddddd;
@@ -14,6 +15,7 @@
 	  padding: 12px; 
 	  text-decoration: none; 
 	  font-size : 20px;
+	  border: 1px solid black;
 	}
 	.menu a:hover {
 	  background-color: #565656; 
@@ -26,15 +28,36 @@
 		float:left;
 		 left:200px
 	}
+	div div{
+		margin-left: 350px;
+		border: 1px solid black;
+		width: 600px;
+		height: 700px;
+		background-color: aliceblue;
+	}
 </style>
 </head>
 <body bgcolor=#8fbc8f>
-    <h2> The Horizontal menu </h2>
+    <h2> The VERTICAL menu </h2>
     <ul class="menu">
-	  <li><a href="link" class="active">Home</a></link>
-	  <li><a href="link">Menu</a></link>
-	  <li><a href="link">study</a></link>
-	  <li><a href="link">contact</a></link>
+		<li><a href="#home" class="active">Home</a></li>
+			<li><a href="#news">Menu</a></li>
+			<li><a href="#contact">study</a></li>
+			<li><a href="#about">contact</a></li>
 	</ul>
+	<div>
+		<div id="home">
+			<h1>HOME</h1>
+		</div>
+		<div id="news">
+			<h1>NEWS</h1>
+		</div>
+		<div id="contact">
+			<h1>CONTACT</h1>
+		</div>
+		<div id="about">
+			<h1>ABOUT</h1>
+		</div>
+	</div>
 </body>
 </html>
