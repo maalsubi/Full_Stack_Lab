@@ -1,0 +1,106 @@
+<html>
+<head>
+  <title>Dropdown Menu</title>
+  <style>
+    .dropdown {
+      position: relative;
+      display: inline-block;
+      cursor: pointer;
+      top:20px;
+      left: 20px;
+    }
+    .dropdown-content {
+      display: none;
+      position: relative;
+      background-color: #d0e9ef;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+      top:40px;
+    }
+    .dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      display: block;
+      text-decoration: none;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #f1f1f1;
+    }
+    span{
+      border:1px solid rgb(253, 3, 120);
+      background-color: hotpink;
+      padding: 20px;
+      position: relative;
+      top:20px;
+    }
+    section{
+      position: absolute;
+      top:20px;
+      left: 50%;
+      display: none;
+    }
+  </style>
+  
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var dropdown = document.getElementById("dropdown");
+      var dropdownContent = document.getElementById("myDropdown");
+
+      dropdown.addEventListener("click", function() {
+        if (dropdownContent.style.display == "block") {
+          dropdownContent.style.display = "none";
+        } else {
+          dropdownContent.style.display = "block";
+        }
+      });
+
+      // Close the dropdown if the user clicks outside of it
+      window.addEventListener("click", function(event) {
+        if (!event.target.closest('.dropdown')) {
+          dropdownContent.style.display = "none";
+          hideAllSections();
+        }
+      });
+    });
+
+    function func(e){
+      hideAllSections();
+      let content=document.getElementById(e.className);
+      content.style.display="block";
+    }
+    function hideAllSections() {
+      // Get all section elements and hide them
+      var sections = document.getElementsByTagName('section');
+      for (var i = 0; i < sections.length; i++) {
+          sections[i].style.display = 'none';
+      }
+    }
+  </script>
+
+</head>
+<body>
+  <div class="dropdown" id="dropdown">
+    <span>SHOW OPTIONS</span>
+    <div class="dropdown-content" id="myDropdown">
+      <a class="opt1" onclick="func(this)">Option 1</a>
+      <a class="opt2" onclick="func(this)">Option 2</a>
+      <a class="opt3" onclick="func(this)">Option 3</a>
+    </div>
+  </div>
+
+  <section id="opt1">
+    <h1>In the content of option 1 </h1>
+    <p> Hello all !!!</p>
+  </section>
+  <section id="opt2">
+    <h1>In the content of option 2 </h1>
+    <p> Hello all !!!</p>
+  </section>
+  <section id="opt3">
+    <h1>In the content of option 3 </h1>
+    <p> Hello all !!!</p>
+  </section>
+
+</body>
+</html>
