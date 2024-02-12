@@ -1,0 +1,76 @@
+<html>
+<head>
+<title>Drag and Drop Example</title>
+<style>
+    #list {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+    #list li {
+        margin: 5px;
+        padding: 10px;
+        background-color: #f760ba;
+        cursor: pointer;
+        height: 20px;
+        width:100px;
+        font-size: 20px;
+    }
+    #list li:hover {
+        background-color: #f568bf;
+    }
+</style>
+</head>
+<body>
+
+<h2>Drag and Drop Example</h2>
+
+<ul id="list">
+    <li draggable="true" ondragstart="drag(event)">Item 1</li>
+    <li draggable="true" ondragstart="drag(event)">Item 2</li>
+    <li draggable="true" ondragstart="drag(event)">Item 3</li>
+    <li draggable="true" ondragstart="drag(event)">Item 4</li>
+    <li draggable="true" ondragstart="drag(event)">Item 5</li>
+</ul>
+
+<script>
+    var draggedItem = null;
+
+    function allowDrop(ev) {
+        ev.preventDefault();
+    }
+
+    function drag(ev) {
+        draggedItem = ev.target;
+        ev.dataTransfer.setData("text", ev.target.innerHTML);
+    }
+
+    function drop(ev) {
+        ev.preventDefault();
+        var data = ev.dataTransfer.getData("text");
+        var target = ev.target;
+        // If the drop target is not the list itself but one of its children
+        // we need to set the target to the parent element (the list item)
+        if (!target.classList.contains("droppable")) {
+            target = target.parentNode;
+        }
+
+        // Reorder the items
+        var list = document.getElementById("list");
+        list.insertBefore(draggedItem, target);
+
+        draggedItem = null;
+    }
+
+    var listItems = document.querySelectorAll("#list li");
+    listItems.forEach(function(item) {
+        item.classList.add("droppable");
+    });
+
+    var list = document.getElementById("list");
+    list.addEventListener("dragover", allowDrop);
+    list.addEventListener("drop", drop);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Form Validation</title>
+  <style>
+    .error-message {
+      color: red;
+    }
+    form {
+                margin-left: 20%;
+                width: 50%;
+                background-color: #fff;
+                padding: 20px;
+                    border-radius: 8px;
+            }
+            label {
+                display: block;
+                margin-bottom: 8px;
+                font-weight: bold;
+            }
+
+            input, textarea {
+                width: 100%;
+                padding: 8px;
+                margin-bottom: 10px;
+                box-sizing: border-box;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
+  </style>
+  
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    var form = document.getElementById('myForm');
+    if (form) {
+      form.addEventListener('submit', function (event) {
+        var errorMessages = document.getElementById('errorMessages');
+        errorMessages.innerHTML = ''; // Clear previous error messages
+
+        var formElements = this.elements;
+        var isValid = true;
+        var radioGroupChecked = false;
+
+        for (var i = 0; i < formElements.length; i++) {
+          var element = formElements[i];
+
+          if (element.hasAttribute('required') && element.value.trim() == '') {
+            var fieldName = element.name || element.id;
+            var errorMessage = fieldName.charAt(0).toUpperCase() + fieldName.slice(1) + ' is required.';
+            displayErrorMessage(errorMessage);
+            isValid = false;
+          }
+
+          if (element.type == 'radio' && element.checked) {
+            radioGroupChecked = true;
+          }
+        }
+
+        if (!radioGroupChecked) {
+          var radioGroupName = 'gender'; // Adjust to the actual name of your radio group
+          var radioErrorMessage = 'Please select a ' + radioGroupName.charAt(0).toUpperCase() + radioGroupName.slice(1) + '.';
+          displayErrorMessage(radioErrorMessage);
+          isValid = false;
+        }
+
+        if (!isValid) {
+          event.preventDefault(); // Prevent form submission
+        }
+      });
+    } else {
+      console.error("Form element with ID 'myForm' not found.");
+    }
+  });
+
+  function displayErrorMessage(message) {
+    var errorMessages = document.getElementById('errorMessages');
+    var errorMessageNode = document.createElement('div');
+    errorMessageNode.textContent = message;
+    errorMessages.appendChild(errorMessageNode);
+  }
+  </script>
+  
+</head>
+<body>
+<h2>Form Validation</h2>
+
+<form id="myForm">
+  <label for="firstName">First Name:</label>
+  <input type="text" id="firstName" name="firstName" required>
+  <br>
+
+  <label for="lastName">Last Name:</label>
+  <input type="text" id="lastName" name="lastName" required>
+  <br>
+
+  <label>Email:</label>
+  <input type="email" id="email" name="email" required>
+  <br>
+
+  <label>Gender:</label>
+  <input type="radio" id="male" name="gender" value="male">
+  <label for="male">Male</label>
+  <input type="radio" id="female" name="gender" value="female">
+  <label for="female">Female</label>
+  <br>
+
+  <input type="submit" value="Submit">
+</form>
+
+<div id="errorMessages" class="error-message"></div>
+</body>
+</html>

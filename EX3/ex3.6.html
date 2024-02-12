@@ -1,0 +1,91 @@
+<html>
+    <head>
+        <style>
+            table {
+                border-collapse: collapse;
+                margin-left: 43%;
+            }
+            td {
+                border: 1px solid black;
+                width: 50px;
+                height: 50px;
+                text-align: center;
+                cursor: pointer;
+            }
+            .empty {
+                background-color: lightgray;
+            }
+            h1{
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>15 PUZZLE GAME</h1>
+            <table id="gameBoard">
+                <tr>
+                  <td onclick="moveTile(this)">1</td>
+                  <td onclick="moveTile(this)">2</td>
+                  <td onclick="moveTile(this)">3</td>
+                  <td onclick="moveTile(this)">4</td>
+                </tr>
+                <tr>
+                  <td onclick="moveTile(this)">5</td>
+                  <td onclick="moveTile(this)">6</td>
+                  <td onclick="moveTile(this)">7</td>
+                  <td onclick="moveTile(this)">8</td>
+                </tr>
+                <tr>
+                  <td onclick="moveTile(this)">9</td>
+                  <td onclick="moveTile(this)">10</td>
+                  <td onclick="moveTile(this)">11</td>
+                  <td onclick="moveTile(this)">12</td>
+                </tr>
+                <tr>
+                  <td onclick="moveTile(this)">13</td>
+                  <td onclick="moveTile(this)">14</td>
+                  <td onclick="moveTile(this)">15</td>
+                  <td class="empty" onclick="moveTile(this)"></td>
+                </tr>
+              </table>
+      <script>
+            function shuffleCells() {
+              const cells = document.querySelectorAll('td:not(.empty)');
+              const values = Array.from(cells, cell => cell.textContent);
+              values.sort(() => Math.random() - 0.5);
+              cells.forEach((cell, index) => {
+                cell.textContent = values[index];
+              });
+            }
+            function moveTile(tile) {
+              const emptyCell = document.querySelector('td.empty');
+              if (isAdjacent(emptyCell, tile)) {
+                emptyCell.textContent = tile.textContent;
+                tile.textContent = '';
+                emptyCell.classList.remove('empty');
+                tile.classList.add('empty');
+                checkWin();
+              }
+            }
+            function isAdjacent(cell1, cell2) {
+              const rowIndex1 = cell1.parentNode.rowIndex;
+              const cellIndex1 = cell1.cellIndex;
+              const rowIndex2 = cell2.parentNode.rowIndex;
+              const cellIndex2 = cell2.cellIndex;
+              return (
+                (Math.abs(rowIndex1 - rowIndex2) === 1 && cellIndex1 === cellIndex2) ||
+                (Math.abs(cellIndex1 - cellIndex2) === 1 && rowIndex1 === rowIndex2)
+              );
+            }
+            function checkWin() {
+              const cells = document.querySelectorAll('td:not(.empty)');
+              const values = Array.from(cells, cell => parseInt(cell.textContent));
+              const sortedValues = [...values].sort((a, b) => a - b);
+              if (JSON.stringify(values) === JSON.stringify(sortedValues)) {
+                alert('Congratulations! You have won the game!');
+              }
+            }
+            window.onload = shuffleCells;
+        </script>
+    </body>
+</html>
