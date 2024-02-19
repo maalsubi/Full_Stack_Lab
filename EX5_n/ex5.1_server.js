@@ -14,7 +14,9 @@ const server = net.createServer(client => {
             client.end("goodbye");
             return;
         }
-        client.write(`You said: ${message}`);
+        process.stdin.on('data', data => {
+            client.write(data.toString());
+        });
     });
     client.on('end', () => {
         console.log('Client disconnected');
