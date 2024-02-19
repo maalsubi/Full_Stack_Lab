@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Char Count</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <h1>Char Count Application</h1>
+
+    <div id="greeting"></div>
+    <div id="charCount"></div>
+    <div id="wordCount"></div>
+
+    <form>
+        <label for="message">Enter Message:</label>
+        <input type="text" id="message" name="message">
+        <button type="button" onclick="getGreeting()">Get Greeting</button>
+        <button type="button" onclick="postMessage()">Count Characters and Words</button>
+    </form>
+
+    <script>
+        function getGreeting() {
+            axios.get('http://localhost:3000/hello')
+                .then(response => {
+                    document.getElementById('greeting').innerText = JSON.stringify(response.data.message);
+                })
+                .catch(error => {
+                    console.error('GET Error:', error.message);
+                });
+        }
+
+        function postMessage() {
+            const message = document.getElementById('message').value;
+            axios.post('http://localhost:3000/count', { message })
+                .then(response => {
+                    document.getElementById('charCount').innerText = `Character Count: ${response.data.charCount}`;
+                    document.getElementById('wordCount').innerText = `Word Count: ${response.data.words}`;
+                })
+                .catch(error => {
+                    console.error('POST Error:', error.message);
+                });
+        }
+    </script>
+</body>
+</html>
