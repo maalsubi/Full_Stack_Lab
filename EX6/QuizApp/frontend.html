@@ -1,0 +1,129 @@
+<html>
+    <head>
+        <title>Pet Survey</title>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        
+        <style>
+            h1{
+                text-align: center;
+                color: hotpink;
+            }
+            #questions {
+                margin-top: 20px;
+            }
+
+            div div {
+                margin-bottom: 20px;
+            }
+
+            /* CSS styles for radio button labels */
+            div label {
+                display: block;
+                margin-bottom: 10px;
+                
+            }
+
+            /* CSS styles for radio buttons */
+            div input[type="radio"] {
+                margin-right: 5px;
+            }
+
+            /* CSS styles for the submit button */
+            button {
+                background-color: #4CAF50; /* Green */
+                border: none;
+                color: white;
+                padding: 10px 20px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin-top: 20px;
+                cursor: pointer;
+                border-radius: 5px;
+            }
+
+        </style>
+    </head>
+    <body>
+        <h1>Welcome to Quiz</h1>
+        <button onclick="create()">CREATE QUESTIONS</button>
+        <button onclick="getQuestions()">GET QUESTIONS</button>
+        <div id="questions">
+        </div>
+
+        <script>
+            const correctOptions={};
+            function create(){
+                axios.get("http://localhost:3000/create").then((res)=>{
+                    alert("Created Quiz !! Time to play");
+                })
+            }
+            function getQuestions(){
+                axios.get('http://localhost:3000/getQues')
+                    .then((response)=>{
+                        const cont=document.getElementById("questions");
+                        const ques_list=JSON.parse(JSON.stringify(response.data));
+                        ques_list.forEach(ques => {
+                            const d=document.createElement("div");
+                            const h=document.createElement("h4");
+                            h.textContent=ques['question'];
+                            d.appendChild(h);
+
+                            ques['options'].forEach(option=>{
+                                const optionLabel = document.createElement("label");
+                                const optionRadio = document.createElement("input");
+                                optionRadio.setAttribute("type", "radio");
+                                optionRadio.setAttribute("name", ques['_id']); // Use question ID as the radio button group name to ensure only one option can be selected per question
+                                optionRadio.setAttribute("value", option);
+                                optionLabel.appendChild(optionRadio);
+                                optionLabel.appendChild(document.createTextNode(option)); // Add option text
+                                d.appendChild(optionLabel);
+                            })  
+                            cont.appendChild(d);
+                        });
+                        const but=document.createElement("button")
+                        but.textContent="SUBMIT"
+                        but.addEventListener("click",checkScore);
+                        cont.appendChild(but);
+
+                    })
+                    .catch((err)=>{
+                        console.error('GET Error:', err.message);
+                    })
+            }
+            function checkScore(){
+                axios.get('http://localhost:3000/getQues')
+                    .then((res)=>{
+                        const ques_list=JSON.parse(JSON.stringify(res.data));
+                        ques_list.forEach((ques)=>{
+                            correctOptions[ques['_id']]=ques['crtoption'];
+                        })
+                        console.log(correctOptions);
+                        const questions = document.querySelectorAll("#questions div");
+                        let score = 0;
+
+                        questions.forEach(questionDiv => {
+                            const selectedOption = questionDiv.querySelector("input[type='radio']:checked");
+                            const questionId = selectedOption.getAttribute("name");
+                            const selectedValue = selectedOption.getAttribute("value");
+
+                            console.log("Selected ",selectedValue);
+
+                            if (selectedValue === correctOptions[questionId]) {
+                                score++;
+                            }
+                        });
+
+                        alert("Your score: " + score);
+                    })
+                    .catch((err)=>{
+                        console.error('GET Error:', err.message);
+                    })
+                    
+            }
+        </script>
+
+
+    </body>
+</html>
