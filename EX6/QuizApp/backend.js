@@ -58,7 +58,9 @@ app.get("/create",(req,res)=>{
           crtoption: "Japan"
         }
       ];
-    quesModel.insertMany(quizQuestions)
+    quesModel.deleteMany()
+    .then(()=>{
+        quesModel.insertMany(quizQuestions)
         .then(() => {
             res.status(201).send('Questions Created successfully.');
         })
@@ -66,6 +68,11 @@ app.get("/create",(req,res)=>{
             console.error(err);
             res.status(500).send('Error creating questions.');
         });     
+    })
+    .catch((err)=>{
+        console.err(err);
+    })
+    
 });
 
 app.get("/getQues",(req,res)=>{
@@ -83,4 +90,3 @@ const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
-
